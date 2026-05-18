@@ -1,0 +1,157 @@
+/* Global CSS for RentSafe — theme-aware fields */
+
+:root {
+    color-scheme: light;
+}
+
+.dark {
+    color-scheme: dark;
+}
+
+/* Date picker follows active theme */
+input[type="date"] {
+    color-scheme: inherit;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Field Color System ─────────────────────────────── */
+
+/* Violet — Email */
+.field-violet {
+    background-color: #f5f3ff !important;
+    border-color: #ddd6fe !important;
+}
+.field-violet:focus-within {
+    border-color: #7c3aed !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
+}
+.field-violet .field-label { color: #6d28d9 !important; }
+
+/* Rose — Password */
+.field-rose {
+    background-color: #fff1f2 !important;
+    border-color: #fecdd3 !important;
+}
+.field-rose:focus-within {
+    border-color: #e11d48 !important;
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.08);
+}
+.field-rose .field-label { color: #be123c !important; }
+
+/* Sky — Name fields */
+.field-sky {
+    background-color: #f0f9ff !important;
+    border-color: #bae6fd !important;
+}
+.field-sky:focus-within {
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.08);
+}
+.field-sky .field-label { color: #0369a1 !important; }
+
+/* Emerald — Mobile/OTP */
+.field-emerald {
+    background-color: #ecfdf5 !important;
+    border-color: #a7f3d0 !important;
+}
+.field-emerald:focus-within {
+    border-color: #059669 !important;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.08);
+}
+.field-emerald .field-label { color: #047857 !important; }
+
+/* Amber — DOB/Date */
+.field-amber {
+    background-color: #fffbeb !important;
+    border-color: #fde68a !important;
+}
+.field-amber:focus-within {
+    border-color: #d97706 !important;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.08);
+}
+.field-amber .field-label { color: #b45309 !important; }
+
+/* Indigo — Gender */
+.field-indigo {
+    background-color: #eef2ff !important;
+    border-color: #c7d2fe !important;
+}
+.field-indigo:focus-within {
+    border-color: #4338ca !important;
+    box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.08);
+}
+.field-indigo .field-label { color: #3730a3 !important; }
+
+/* Teal — Occupation */
+.field-teal {
+    background-color: #f0fdfa !important;
+    border-color: #99f6e4 !important;
+}
+.field-teal:focus-within {
+    border-color: #0d9488 !important;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.08);
+}
+.field-teal .field-label { color: #0f766e !important; }
+
+/* Fuchsia — Location */
+.field-fuchsia {
+    background-color: #fdf4ff !important;
+    border-color: #f0abfc !important;
+}
+.field-fuchsia:focus-within {
+    border-color: #a21caf !important;
+    box-shadow: 0 0 0 3px rgba(162, 28, 175, 0.08);
+}
+.field-fuchsia .field-label { color: #86198f !important; }
+
+/* Orange — CAPTCHA */
+.field-orange {
+    background-color: #fff7ed !important;
+    border-color: #fed7aa !important;
+}
+.field-orange:focus-within {
+    border-color: #ea580c !important;
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.08);
+}
+.field-orange .field-label { color: #c2410c !important; }
+
+/* ── Scrollbar ──────────────────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 2px; }
+
+/* ── Animations ─────────────────────────────────────── */
+@keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+.animate-pulse-slow {
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+    animation: fade-up 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes reveal {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.animate-reveal {
+    animation: reveal 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}

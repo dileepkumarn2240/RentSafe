@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentSafe — Rental management</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237C3AED' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3Cpolyline points='9 22 9 12 15 12 15 22'/%3E%3C/svg%3E">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              900: '#0a0f1e',
+              950: '#020617',
+            },
+            vanta: {
+              DEFAULT: '#010409',
+              soft: '#0d1117',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    }
+
+    /* Global Smooth Transitions */
+    * {
+      transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    /* Shimmer Animation for Skeletons */
+    @keyframes shimmer {
+      0% {
+        background-position: -468px 0;
+      }
+
+      100% {
+        background-position: 468px 0;
+      }
+    }
+
+    .animate-shimmer {
+      animation: shimmer 1.5s infinite linear;
+      background: linear-gradient(to right, rgba(124, 58, 237, 0.03) 8%, rgba(124, 58, 237, 0.08) 18%, rgba(124, 58, 237, 0.03) 33%);
+      background-size: 800px 100%;
+    }
+
+    .dark .animate-shimmer {
+      background: linear-gradient(to right, rgba(255, 255, 255, 0.02) 8%, rgba(255, 255, 255, 0.05) 18%, rgba(255, 255, 255, 0.02) 33%);
+      background-size: 800px 100%;
+    }
+
+    /* Custom Shadows */
+    .premium-shadow {
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+    }
+
+    .dark .premium-shadow {
+      box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-reveal {
+      animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    .stagger-1 {
+      animation-delay: 0.1s;
+    }
+
+    .stagger-2 {
+      animation-delay: 0.2s;
+    }
+
+    .stagger-3 {
+      animation-delay: 0.3s;
+    }
+
+    .stagger-4 {
+      animation-delay: 0.4s;
+    }
+
+    .stagger-5 {
+      animation-delay: 0.5s;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(124, 58, 237, 0.2);
+      border-radius: 10px;
+    }
+
+    /* Premium Mesh Gradients */
+    .mesh-gradient {
+      background-color: #010409;
+      background-image:
+        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+        radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0.15) 0, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(263, 45%, 12%, 1) 0, transparent 50%);
+    }
+
+    @keyframes blob {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -50px) scale(1.1);
+      }
+
+      66% {
+        transform: translate(-20px, 20px) scale(0.9);
+      }
+
+      100% {
+        transform: translate(0px, 0px) scale(1);
+      }
+    }
+
+    @keyframes spring-up {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        transform: translateY(-20px) scale(0.75);
+      }
+    }
+
+    .animate-spring-up {
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .animate-blob {
+      animation: blob 7s infinite alternate;
+    }
+
+    @keyframes scanline {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(1000%);
+      }
+    }
+
+    .animate-scanline {
+      animation: scanline 8s linear infinite;
+    }
+
+    @keyframes scanner {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+
+      10%,
+      90% {
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(200px);
+      }
+    }
+
+    .animate-scanner {
+      animation: scanner 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-secure {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(124, 58, 237, 0.4);
+      }
+    }
+
+    .animate-pulse-secure {
+      animation: pulse-secure 2s ease-in-out infinite;
+    }
+
+    :root {
+      --banana-gold: #fbbf24;
+      --vanta-navy: #010409;
+      --mesh-opacity: 0.15;
+    }
+
+    /* Cinematic Mesh Background */
+    .bg-nano-banana {
+      background-color: var(--vanta-navy);
+      background-image:
+        radial-gradient(at 0% 0%, rgba(251, 191, 36, 0.1) 0px, transparent 50%),
+        radial-gradient(at 50% 0%, rgba(124, 58, 237, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(251, 191, 36, 0.1) 0px, transparent 50%);
+      background-size: 100% 100%;
+    }
+
+    /* Technical Grid Overlay */
+    .bg-blueprint {
+      background-image: radial-gradient(rgba(251, 191, 36, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .banana-glow {
+      box-shadow: 0 0 20px -5px rgba(251, 191, 36, 0.3);
+    }
+
+    @keyframes ring-draw {
+      0% {
+        stroke-dashoffset: 283;
+        opacity: 0;
+      }
+
+      100% {
+        stroke-dashoffset: var(--ring-offset);
+        opacity: 1;
+      }
+    }
+
+    .animate-ring-draw {
+      animation: ring-draw 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes mood-slide {
+      0% {
+        transform: translateY(10px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .animate-mood-slide {
+      animation: mood-slide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .animate-marquee {
+      animation: marquee 40s linear infinite;
+    }
+
+    @keyframes fill-reveal {
+      0% {
+        width: 0;
+        opacity: 0;
+      }
+
+      100% {
+        width: 100%;
+        opacity: 1;
+      }
+    }
+
+    .animate-fill-reveal {
+      animation: fill-reveal 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes secure-glow {
+
+      0%,
+      100% {
+        opacity: 0.3;
+        filter: blur(20px);
+      }
+
+      50% {
+        opacity: 0.6;
+        filter: blur(40px);
+      }
+    }
+
+    .animate-secure-glow {
+      animation: secure-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-slow {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.9);
+      }
+    }
+
+    .animate-pulse-slow {
+      animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+
+    .animation-delay-4000 {
+      animation-delay: 4s;
+    }
+  </style>
+
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body class="antialiased overflow-x-hidden bg-slate-50 dark:bg-vanta text-slate-900 dark:text-white">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>

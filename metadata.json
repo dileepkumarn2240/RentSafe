@@ -1,0 +1,7 @@
+{
+  "name": "RentSafe - Smart Rental Management",
+  "description": "A comprehensive, role-based rental management platform for owners and tenants featuring identity verification, inventory tracking, and automated maintenance records.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
